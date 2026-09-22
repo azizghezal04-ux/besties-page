@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Little Question ❤️</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffd6e7, #ffeef5);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      width: min(90%, 430px);
+      padding: 40px 25px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 30px;
+      box-shadow: 0 15px 40px rgba(255, 105, 150, 0.2);
+    }
+
+    h1 {
+      color: #ff4f87;
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      position: relative;
+      min-height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+
+    button {
+      border: none;
+      border-radius: 50px;
+      padding: 14px 28px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yes {
+      background: #ff5c8a;
+      color: white;
+    }
+
+    #no {
+      background: #eee;
+      color: #555;
+      position: relative;
+    }
+
+    #next {
+      display: none;
+      margin: 25px auto 0;
+      background: #ff5c8a;
+      color: white;
+    }
+
+    #message {
+      display: none;
+      color: #ff4f87;
+      font-size: 27px;
+      font-weight: bold;
+      animation: pop 0.6s ease;
+    }
+
+    .heart {
+      position: fixed;
+      color: #ff7da5;
+      font-size: 20px;
+      animation: float 4s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card" id="card">
+    <div id="question">
+      <h1>Are you happy with our relationship? ❤️</h1>
+
+      <div class="buttons">
+        <button id="yes">Yes ❤️</button>
+        <button id="no">No 😏</button>
+      </div>
+    </div>
+
+    <div id="result">
+      <div id="message">
+        I already know it 😆😁❤️
+      </div>
+
+      <button id="next">Next ➜</button>
+    </div>
+  </div>
+
+  <script>
+    const noButton = document.getElementById("no");
+    const yesButton = document.getElementById("yes");
+    const question = document.getElementById("question");
+    const result = document.getElementById("result");
+    const message = document.getElementById("message");
+    const nextButton = document.getElementById("next");
+
+    let noSize = 1;
+
+    noButton.addEventListener("click", () => {
+      // Make the No button smaller
+      noSize *= 0.75;
+
+      noButton.style.transform = `scale(${noSize})`;
+
+      // Move it to a random position
+      const x = Math.random() * 220 - 110;
+      const y = Math.random() * 160 - 80;
+
+      noButton.style.left = `${x}px`;
+      noButton.style.top = `${y}px`;
+    });
+
+    yesButton.addEventListener("click", () => {
+      question.style.display = "none";
+      result.style.display = "block";
+      message.style.display = "block";
+      nextButton.style.display = "block";
+    });
+
+    nextButton.addEventListener("click", () => {
+      document.getElementById("card").innerHTML = `
+        <h1>That's all ❤️</h1>
+        <p style="font-size:20px;color:#ff4f87;">
+          Thank you for playing 😆💕
+        </p>
+      `;
+    });
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 700);
+  </script>
+
+</body>
+</html>
